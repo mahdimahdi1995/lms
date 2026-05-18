@@ -1,0 +1,73 @@
+# .NET artifacts
+bin/
+obj/
+*.user
+*.suo
+.vs/
+*.userprefs
+
+# NuGet
+*.nupkg
+*.snupkg
+packages/
+project.lock.json
+artifacts/
+
+# Build results
+[Dd]ebug/
+[Rr]elease/
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+[Ll]ogs/
+bld/
+
+# Node / Angular
+node_modules/
+dist/
+.angular/
+.npm/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# IDE
+.idea/
+*.iml
+*.iws
+.vscode/
+!.vscode/settings.json
+!.vscode/extensions.json
+.rider/
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Secrets and local config overrides
+*.env
+.env.*
+appsettings.*.Local.json
+appsettings.Local.json
+secrets.json
+**/*.pfx
+**/*.key
+**/*.pem
+
+# SQL Server Docker volume data folder
+.docker/
+
+# Published output
+publish/
+out/
+
+# Test results
+TestResults/
+coverage/
+*.coverage
+*.coveragexml
+
+# EF Core bundle
+efbundle
+efbundle.exe
