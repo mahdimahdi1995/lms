@@ -1,6 +1,7 @@
 services:
   sqlserver:
     image: mcr.microsoft.com/mssql/server:2022-latest
+    platform: linux/amd64  # SQL Server has no ARM64 image; force x64 emulation via QEMU
     container_name: lms_sqlserver
     environment:
       SA_PASSWORD: "LmsDevPass123!"

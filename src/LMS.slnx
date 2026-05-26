@@ -1,0 +1,8 @@
+<Solution>
+  <Project Path="../tests/LMS.IntegrationTests/LMS.IntegrationTests.csproj" />
+  <Project Path="../tests/LMS.UnitTests/LMS.UnitTests.csproj" />
+  <Project Path="LMS.Api/LMS.Api.csproj" />
+  <Project Path="LMS.Application/LMS.Application.csproj" />
+  <Project Path="LMS.Domain/LMS.Domain.csproj" />
+  <Project Path="LMS.Infrastructure/LMS.Infrastructure.csproj" />
+</Solution>
