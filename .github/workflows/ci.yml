@@ -1,0 +1,48 @@
+name: CI
+
+on:
+  push:
+    branches: [main, 'feature/**']
+  pull_request:
+    branches: [main]
+
+jobs:
+  backend:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+
+      - uses: actions/cache@v4
+        with:
+          path: ~/.nuget/packages
+          key: ${{ runner.os }}-nuget-${{ hashFiles('**/*.csproj') }}
+          restore-keys: ${{ runner.os }}-nuget-
+
+      - run: dotnet restore src/LMS.slnx
+
+      - run: dotnet build src/LMS.slnx --no-restore --configuration Release
+
+      - run: dotnet test tests/LMS.UnitTests --no-build --configuration Release --verbosity normal
+
+      - run: dotnet test tests/LMS.IntegrationTests --no-build --configuration Release --verbosity normal
+
+  frontend:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Check frontend scaffold
+        run: |
+          if [ -f "frontend/lms-ui/package.json" ]; then
+            cd frontend/lms-ui && npm ci && npm run build && npm test -- --watch=false --browsers=ChromeHeadless
+          else
+            echo "Angular scaffold not yet added — skipping frontend job"
+          fi

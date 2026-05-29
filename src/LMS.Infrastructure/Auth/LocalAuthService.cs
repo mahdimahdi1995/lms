@@ -1,5 +1,6 @@
 using LMS.Application.Auth.Dtos;
 using LMS.Application.Interfaces;
+using LMS.Domain.Constants;
 using LMS.Infrastructure.Persistence;
 using Microsoft.AspNetCore.Identity;
 
@@ -32,7 +33,7 @@ public class LocalAuthService : IAuthService
         if (!result.Succeeded)
             return new AuthResult(false, null, string.Join("; ", result.Errors.Select(e => e.Description)));
 
-        await _userManager.AddToRoleAsync(user, "Learner");
+        await _userManager.AddToRoleAsync(user, Roles.Learner);
 
         var token = await _jwtService.GenerateTokenAsync(user);
         return new AuthResult(true, token, null);

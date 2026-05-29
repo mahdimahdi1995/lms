@@ -1,8 +1,11 @@
 using System.Text;
 using LMS.Application.Auth.Validators;
 using LMS.Application.Interfaces;
+using LMS.Application.Users.Validators;
+using LMS.Domain.Constants;
 using LMS.Infrastructure.Auth;
 using LMS.Infrastructure.Persistence;
+using LMS.Infrastructure.Users;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -61,6 +64,9 @@ builder.Services.AddScoped<IAuthService, LocalAuthService>();
 builder.Services.AddScoped<ICurrentUserService, CurrentUserService>();
 builder.Services.AddScoped<RegisterRequestValidator>();
 builder.Services.AddScoped<LoginRequestValidator>();
+builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<CreateUserRequestValidator>();
+builder.Services.AddScoped<UpdateUserRequestValidator>();
 
 // ── Controllers & OpenAPI ─────────────────────────────────────────────────────
 builder.Services.AddControllers();
@@ -84,7 +90,7 @@ using (var scope = app.Services.CreateScope())
     await db.Database.EnsureCreatedAsync();
 
     var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole<Guid>>>();
-    foreach (var roleName in new[] { "Admin", "Manager", "Trainer", "Learner" })
+    foreach (var roleName in Roles.All)
     {
         if (!await roleManager.RoleExistsAsync(roleName))
             await roleManager.CreateAsync(new IdentityRole<Guid>(roleName));
